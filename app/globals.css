@@ -211,3 +211,39 @@
 @media (prefers-reduced-motion: reduce) {
   .rise-soft { animation: none; }
 }
+
+/* Catálogos (/catalogo/*): lightbox sobre <dialog> y bloqueo de scroll del fondo */
+html:has(.catalog-root) {
+  scrollbar-gutter: stable;
+}
+html:has(.catalog-root dialog[open]) {
+  overflow: hidden;
+}
+.catalog-dialog[open] .catalog-panel {
+  animation: catalog-panel-in 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.catalog-dialog[open]::backdrop {
+  animation: catalog-fade-in 0.3s ease both;
+}
+.catalog-dialog[data-closing="true"] .catalog-panel {
+  animation: catalog-panel-out 0.18s ease-in both;
+}
+.catalog-dialog[data-closing="true"]::backdrop {
+  animation: catalog-fade-out 0.18s ease-in both;
+}
+@keyframes catalog-panel-in {
+  from { opacity: 0; transform: translate3d(0, 40px, 0) scale(0.985); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes catalog-panel-out {
+  from { opacity: 1; transform: none; }
+  to { opacity: 0; transform: translate3d(0, 24px, 0) scale(0.99); }
+}
+@keyframes catalog-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes catalog-fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
